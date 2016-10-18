@@ -1,1 +1,1 @@
-web: gunicorn jpprojeto.wsgi
+web: gunicorn hackerrankbadge.wsgi

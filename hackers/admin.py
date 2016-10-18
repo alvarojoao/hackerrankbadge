@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 
 # Register your models here.
 from django.db import transaction
-from abastecimento.models import Hacker
+from hackers.models import Hacker
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 

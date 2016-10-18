@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'abastecimento.apps.AbastecimentoConfig',
+    'hackers.apps.HackersConfig',
     'django_nvd3',
     'djangobower',
 ]
