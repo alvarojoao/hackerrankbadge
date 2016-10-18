@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.conf.urls import url
 from django.contrib import admin
-from hackers.views import badges,profile,contest
+from hackers.views import badges,profile,contest,submissions
 admin.autodiscover()
 
 
@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^generatebadge/', badges),
     url(r'^generateprofile/', profile),
-    url(r'^generatecontest/', contest)
+    url(r'^generatecontest/', contest),
+    url(r'^generatesubmissions/', submissions)
 
 ]

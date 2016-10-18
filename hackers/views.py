@@ -73,3 +73,11 @@ def contest(request):
 				totalmedals[medal] = totalmedals.get(medal,0) + count
 
 	return render(request, 'contest.html',  locals(), content_type='text/html')
+
+def submissions(request):
+	"""
+	home page
+	"""
+	link = HR_URLS['submission_histories'].replace('_username_',request.GET['username'])
+	data = requests.get(link).json()
+	return render(request, 'submission_histories.html',  locals(), content_type='text/html')
