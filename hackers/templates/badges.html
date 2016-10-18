@@ -1,17 +1,18 @@
+{% load i18n admin_urls static admin_modify %}
+
 <div class="badge_image_container">
-    <img src="https://d3keuzeb2crhkn.cloudfront.net/hackerrank/assets/badges/badge-algo-a58cf850f755e3145e76ee03ce0c86ed.png" width="150" rel="tooltip" class="profile_badge_image" data-original-title="Algorithms  level 2 ">
-          
-            <img src="https://d3keuzeb2crhkn.cloudfront.net/hackerrank/assets/badges/star-f16c5e55373f68cc1936665134bf36a9.png" class="profile_badge_star" width="12" style="left: 43px;">
-          
-            <img src="https://d3keuzeb2crhkn.cloudfront.net/hackerrank/assets/badges/star-f16c5e55373f68cc1936665134bf36a9.png" class="profile_badge_star" width="12" style="left: 61px;">
-          
-            <img src="https://d3keuzeb2crhkn.cloudfront.net/hackerrank/assets/badges/star-outline-f83d79fcb1327efc789f18fc8cb0bbb1.png" class="profile_badge_star" width="12" style="left: 79px;">
-          
-            <img src="https://d3keuzeb2crhkn.cloudfront.net/hackerrank/assets/badges/star-outline-f83d79fcb1327efc789f18fc8cb0bbb1.png" class="profile_badge_star" width="12" style="left: 97px;">
+{% for model in data.models %}
+    <img src="{% static 'img/'|add:model.image_url %}" width="150" rel="tooltip" class="profile_badge_image" data-original-title="Algorithms  level 2 ">
+      	{% for i in 'xxxx' %}
+      		{% if forloop.counter0 < model.level %}
+  			 	<img src="{% static "img/star.png" %}" class="profile_badge_star" width="12">
+      		{% else %}
+  		 		<img src="{% static "img/star-outline.png" %}" class="profile_badge_unstar" width="12">
+      		{% endif %}
+        {% endfor %}
     
     <div class="fnt-wt-500 text-center fnt-sz-mid">
-        
-            33rd percentile
-        
+		{{model.percentile}} rd percentile
     </div>
+    {% endfor %}
 </div>

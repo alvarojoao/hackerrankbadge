@@ -1,0 +1,30 @@
+{% load i18n admin_urls static admin_modify %}
+<style type="text/css">
+  sup {
+      vertical-align: super;
+      font-size: smaller;
+  }
+</style>
+{% if data.model.has_avatar_url %}
+  <img src="{{data.model.avatar}}" width="150" rel="tooltip" class="profile_badge_image" >
+{% else%}
+  <img src="{% static 'img/hackerrank_placeholder.png' %}" width="150" rel="tooltip" class="profile_badge_image" >
+{%endif%}
+
+<span>{{data.model.username}}</span>
+<a href="{{data.model.website}}">My Website</a>
+{% for l,sub in data.model.languages %}
+  <p> <span>{{l}}</span> <span>Submissions:{{sub}}</span> </p>
+{% endfor %}
+<p>Events: {{data.model.event_count}}</p>
+
+{% autoescape off %}
+  {{data.model.title}}
+{% endautoescape %}
+<p>
+  {{data.model.hacker_iq}}
+</p>
+<p>{{data.model.short_bio}}</p>
+<p> <span>Followers:</span> {{data.model.followers_count}}</p>
+
+
