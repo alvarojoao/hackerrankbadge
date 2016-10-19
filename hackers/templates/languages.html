@@ -1,0 +1,35 @@
+{% load i18n admin_urls static admin_modify %}
+<!-- in your header -->
+<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+<style type="text/css">
+	.superscript{float:left;}
+	.subscript{float:left;}
+	.supsub{
+		float:left;
+		padding-left: 10px;
+		position: relative;
+	    top: 10px;
+	}
+</style>
+{% for l,sub,class in data %}
+		<span style="float:left;"> 
+			<i style="float:left;" class="{{class}}"></i>
+			<span  class='supsub'>
+				{% if show_submissions %}
+					<sup class='superscript'>Submissions: {{sub}}</sup>
+				{% else %}
+					<sup class='superscript'>{{sub}}</sup>
+				{% endif %}
+
+				{% if show_language %}
+					<sub class='subscript'>{{l}}</sub>
+				{%else %}
+					<sub class='subscript'>{{l}}</sub>
+				{% endif %}
+			</span>
+			
+		</span>
+{% endfor %}
+
+<!-- in your body -->
+

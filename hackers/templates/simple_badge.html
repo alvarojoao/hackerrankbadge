@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n admin_urls static admin_modify %}
+<style type="text/css">
+  sup {
+  }
+  .float-left{
+  	float:left;
+  }
+</style>
+{% block content  %}
+<div class="card">
+  <h3 class="card-header">
+	{% if profile.model.has_avatar_url %}
+		<img src="{{profile.model.avatar}}" width="30" rel="tooltip" class="profile_badge_image" >
+	{% else%}
+		<img src="{% static 'img/hackerrank_placeholder.png' %}" width="30" rel="tooltip" class="profile_badge_image" >
+	{%endif%}
+
+  {{profile.model.username}} 
+	{% autoescape off %}
+		{{profile.model.title}}
+	{% endautoescape %} Level</h3>
+  <div class="card-block">
+    <h4 class="card-title">
+	    {% include "contest.html" with data=contest only %}
+    	{% include "languages.html" with data=languages only %}
+		<span><strong>Events:</strong> {{profile.model.event_count}}</span>
+		<span><strong>Followers:</strong> {{profile.model.followers_count}}</span>
+    </h4>
+
+    {% include "badges.html" with data=badges only %}
+
+    <p class="card-text">{{profile.model.short_bio}}</p>
+	{% if profile.model.website %}
+		<a class="btn btn-primary" href="{{profile.model.website}}">My Website</a>
+	{%endif%}
+
+  </div>
+</div>
+{% endblock %}
