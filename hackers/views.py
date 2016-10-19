@@ -97,7 +97,6 @@ HR_LANG={"c":'devicon-c-line',
 "mysql":'devicon-mysql-plain-wordmark colored',
 "db2":''}
 
-
 def simple_badge(request):
 	"""
 	home page
@@ -118,19 +117,21 @@ def simple_badge(request):
 		show_website = request.GET.get('show_website','True') in ['true', 'True']
 		show_last_submmissions = request.GET.get('show_last_submmissions','True') in ['true', 'True']
 
+
+		username = request.GET.get('username','alvarojoao')
 		if show_image or show_username or show_level or show_events or show_followers or show_bio or show_website:
-			profile = profile_rest(request.GET.get('username','alvarojoao'))
+			profile = profile_rest(username)
 		if show_medals:
-			contest = contest_rest(request.GET.get('username','alvarojoao'))
+			contest = contest_rest(username)
 		if show_badges:
-			badges = badges_rest(request.GET.get('username','alvarojoao'))
+			badges = badges_rest(username)
 		if show_languages:
-			languages = languages_rest(request.GET.get('username','alvarojoao')) 
+			languages = languages_rest(username) 
 		if show_last_submmissions:
-			submissions = submissions_rest(request.GET.get('username','alvarojoao')) 
+			submissions = submissions_rest(username) 
 
 	except:
-		raise Http404("Sorry can't find this username:"+request.GET.get('username','alvarojoao'))
+		raise Http404("Sorry can't find this username:"+username)
 
 	return render(request, 'simple_badge.html',  locals(), content_type='text/html')
 

@@ -5,17 +5,16 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <style type="text/css">
-	.container {
-  width: 100%;
-  margin: 15px auto;
+.last-submissions {
+  width: 200px;
+  float:left;
+  display: block;
+
 }
 
-#caption{
-  margin-left: 25px;
-}
 </style>
 
-<div class="container">
+<div class="last-submissions">
   <div>
     <canvas id="myChart"></canvas>
   </div>
@@ -24,6 +23,9 @@
 	var ctx = document.getElementById("myChart").getContext('2d');
 
 var original = Chart.defaults.global.legend.onClick;
+
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.tooltips.enabled = false;
 Chart.defaults.global.legend.onClick = function(e, legendItem) {
   update_caption(legendItem);
   original.call(this, e, legendItem);
@@ -38,7 +40,19 @@ var myChart = new Chart(ctx, {
       backgroundColor: "rgba(153,255,51,1)",
       data: {{data|unzip:1|toint}},
     }]
-  }
+  },
+  options:
+    {
+        scales:
+        {
+            xAxes: [{
+                display: false
+            }],
+             yAxes: [{
+                display: false
+            }]
+        }
+    }
 });
 </script>
 
