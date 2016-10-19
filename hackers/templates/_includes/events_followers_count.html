@@ -1,0 +1,39 @@
+{% load i18n admin_urls static admin_modify %}
+<!-- in your header -->
+<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+<style type="text/css">
+	.superscript{float:left;}
+	.subscript{float:left;}
+	.supsub{
+		float:left;
+		padding-left: 10px;
+		position: relative;
+	    top: 10px;
+	}
+	.all-languages{
+		padding-bottom: 10px;
+		display:block;
+		widows: 100%;
+	}
+	.event-followers{
+		display: block;
+		width: 100%;
+		float: left;
+		padding-top: 10px;
+	}
+</style>
+{% if show_events or show_followers %}
+
+<div class="event-followers">	
+	{% if show_events %}
+		<span><strong>Events:</strong> {{data.model.event_count}}</span>
+	{%endif%}
+
+	{% if show_followers %}
+		<span><strong>Followers:</strong> {{data.model.followers_count}}</span>
+	{%endif%}
+</div>
+{%endif%}
+
+<!-- in your body -->
+

@@ -9,32 +9,20 @@
 </style>
 {% block content  %}
 <div class="card">
-  <h3 class="card-header">
-	{% if profile.model.has_avatar_url %}
-		<img src="{{profile.model.avatar}}" width="30" rel="tooltip" class="profile_badge_image" >
-	{% else%}
-		<img src="{% static 'img/hackerrank_placeholder.png' %}" width="30" rel="tooltip" class="profile_badge_image" >
-	{%endif%}
+	<h3 class="card-header">
+	    {% include "_includes/profile_picture_username_level.html" with data=profile show_image=True show_username=True show_level=True only %}
+	</h3>
+	<div class="card-block">
+		<h4 class="card-title">
+		    {% include "_includes/medals.html" with data=contest show_medals=True show_medals_details=False only %}
+			{% include "_includes/languages.html" with data=languages show_languages=True show_submissions=True show_language=True only %}
+			{% include "_includes/events_followers_count.html" with data=profile show_events=True show_followers=True only %}
+		</h4>
 
-  {{profile.model.username}} 
-	{% autoescape off %}
-		{{profile.model.title}}
-	{% endautoescape %} Level</h3>
-  <div class="card-block">
-    <h4 class="card-title">
-	    {% include "contest.html" with data=contest only %}
-    	{% include "languages.html" with data=languages only %}
-		<span><strong>Events:</strong> {{profile.model.event_count}}</span>
-		<span><strong>Followers:</strong> {{profile.model.followers_count}}</span>
-    </h4>
+		{% include "_includes/badges.html" with data=badges show_badges=True only %}
 
-    {% include "badges.html" with data=badges only %}
-
-    <p class="card-text">{{profile.model.short_bio}}</p>
-	{% if profile.model.website %}
-		<a class="btn btn-primary" href="{{profile.model.website}}">My Website</a>
-	{%endif%}
-
-  </div>
+		{% include "_includes/profile_bio_website.html" with data=profile show_bio=True show_website=True only %}
+		
+	</div>
 </div>
 {% endblock %}

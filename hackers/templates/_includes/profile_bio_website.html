@@ -1,0 +1,21 @@
+{% load i18n admin_urls static admin_modify %}
+
+<style type="text/css">
+  .profile_bio_website{
+  	display: block;
+  	width: 100%;
+  }
+</style>
+{% if show_bio or show_website  %}
+
+<div class="profile_bio_website">
+    {% if show_bio %}
+      <p class="card-text">{{data.model.short_bio}}</p>
+    {% endif %}
+    {% if show_website %}
+      {% if data.model.website %}
+        <a class="btn btn-primary" href="{{data.model.website}}">My Website</a>
+      {% endif %}
+    {%endif%}
+</div>
+{%endif%}

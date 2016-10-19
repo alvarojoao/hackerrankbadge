@@ -18,6 +18,7 @@ import ast
 from django.template import Context, Template
 from django.http import Http404
 
+
 # https://www.hackerrank.com/rest/contests/master/notifications/summary?_=1476764851227
 # https://www.hackerrank.com/rest/threads/unread_threads?_=1476764851230
 # https://www.hackerrank.com/rest/contests/master/hackers/alvarojoao/profile?_=1476764851231
