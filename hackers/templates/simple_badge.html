@@ -10,18 +10,19 @@
 {% block content  %}
 <div class="card">
 	<h3 class="card-header">
-	    {% include "_includes/profile_picture_username_level.html" with data=profile show_image=True show_username=True show_level=True only %}
+	    {% include "_includes/profile_picture_username_level.html" with data=profile show_image=show_image show_username=show_username show_level=show_level only %}
 	</h3>
 	<div class="card-block">
 		<h4 class="card-title">
-		    {% include "_includes/medals.html" with data=contest show_medals=True show_medals_details=False only %}
-			{% include "_includes/languages.html" with data=languages show_languages=True show_submissions=True show_language=True only %}
-			{% include "_includes/events_followers_count.html" with data=profile show_events=True show_followers=True only %}
+		    {% include "_includes/medals.html" with data=contest show_medals=show_medals show_medals_details=show_medals_detailse only %}
+			{% include "_includes/languages.html" with data=languages show_languages=show_languages show_submissions_title=show_submissions_title show_language_title=show_language_title only %}
+			{% include "_includes/events_followers_count.html" with data=profile show_events=show_events show_followers=show_followers only %}
 		</h4>
 
-		{% include "_includes/badges.html" with data=badges show_badges=True only %}
+		{% include "_includes/badges.html" with data=badges show_badges=show_badges only %}
+		{% include "_includes/last_submissions.html" with data=submissions show_last_submmissions=show_last_submmissions only %}
 
-		{% include "_includes/profile_bio_website.html" with data=profile show_bio=True show_website=True only %}
+		{% include "_includes/profile_bio_website.html" with data=profile show_bio=show_bio show_website=show_website only %}
 		
 	</div>
 </div>

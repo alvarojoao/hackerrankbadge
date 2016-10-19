@@ -1,11 +1,12 @@
 {% load i18n admin_urls static admin_modify %}
 {% load extra %}
 
+{% if show_last_submmissions %}
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <style type="text/css">
 	.container {
-  width: 80%;
+  width: 100%;
   margin: 15px auto;
 }
 
@@ -15,11 +16,9 @@
 </style>
 
 <div class="container">
-  <h2>Chart.js — Bar Chart Demo</h2>
   <div>
     <canvas id="myChart"></canvas>
   </div>
-  <p id="caption">The chart is displaying apples & oranges</p>
 </div>
 <script type="text/javascript">
 	var ctx = document.getElementById("myChart").getContext('2d');
@@ -41,23 +40,6 @@ var myChart = new Chart(ctx, {
     }]
   }
 });
-
-var labels = {
-  "apples": true,
-  "oranges": true
-};
-
-var caption = document.getElementById("caption");
-
-var update_caption = function(legend) {
-  labels[legend.text] = legend.hidden;
-
-  var selected = Object.keys(labels).filter(function(key) {
-    return labels[key];
-  });
-
-  var text = selected.length ? selected.join(" & ") : "nothing";
-
-  caption.innerHTML = "The chart is displaying " + text;
-};
 </script>
+
+{%endif%}

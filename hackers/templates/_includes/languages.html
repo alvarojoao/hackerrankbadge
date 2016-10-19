@@ -16,21 +16,25 @@
 		display:block;
 		width: 100%;
 	}
+	.language{
+		float: left;
+		padding:10px 0px;
+	}
 </style>
 {% if show_languages %}
 
 <div class="all-languages">	
 {% for l,sub,class in data %}
-		<span style="float:left;"> 
+		<span class="language"> 
 			<i style="float:left;" class="{{class}}"></i>
 			<span  class='supsub'>
-				{% if show_submissions %}
+				{% if show_submissions_title %}
 					<sup class='superscript'>Submissions: {{sub}}</sup>
 				{% else %}
 					<sup class='superscript'>{{sub}}</sup>
 				{% endif %}
 
-				{% if show_language %}
+				{% if show_language_title %}
 					<sub class='subscript'>{{l}}</sub>
 				{% endif %}
 			</span>

@@ -17,7 +17,7 @@ import json
 import ast
 from django.template import Context, Template
 from django.http import Http404
-
+from datetime import datetime
 
 # https://www.hackerrank.com/rest/contests/master/notifications/summary?_=1476764851227
 # https://www.hackerrank.com/rest/threads/unread_threads?_=1476764851230
@@ -103,10 +103,32 @@ def simple_badge(request):
 	home page
 	"""
 	try:
-		profile = profile_rest(request.GET.get('username','alvarojoao'))
-		contest = contest_rest(request.GET.get('username','alvarojoao'))
-		badges = badges_rest(request.GET.get('username','alvarojoao'))
-		languages = languages_rest(request.GET.get('username','alvarojoao')) 
+		show_image = request.GET.get('show_image','True')  in ['true', 'True']
+		show_username = request.GET.get('show_username','True') in ['true', 'True']
+		show_level = request.GET.get('show_level','True') in ['true', 'True']
+		show_medals = request.GET.get('show_medals','True') in ['true', 'True']
+		show_medals_details = request.GET.get('show_medals_details','True') in ['true', 'True']
+		show_languages = request.GET.get('show_languages','True') in ['true', 'True']
+		show_submissions_title = request.GET.get('show_submissions_title','True') in ['true', 'True']
+		show_language_title = request.GET.get('show_language_title','True') in ['true', 'True']
+		show_events = request.GET.get('show_events','True') in ['true', 'True']
+		show_followers = request.GET.get('show_followers','True') in ['true', 'True']
+		show_badges = request.GET.get('show_badges','True') in ['true', 'True']
+		show_bio = request.GET.get('show_bio','True') in ['true', 'True']
+		show_website = request.GET.get('show_website','True') in ['true', 'True']
+		show_last_submmissions = request.GET.get('show_last_submmissions','True') in ['true', 'True']
+
+		if show_image or show_username or show_level or show_events or show_followers or show_bio or show_website:
+			profile = profile_rest(request.GET.get('username','alvarojoao'))
+		if show_medals:
+			contest = contest_rest(request.GET.get('username','alvarojoao'))
+		if show_badges:
+			badges = badges_rest(request.GET.get('username','alvarojoao'))
+		if show_languages:
+			languages = languages_rest(request.GET.get('username','alvarojoao')) 
+		if show_last_submmissions:
+			submissions = submissions_rest(request.GET.get('username','alvarojoao')) 
+
 	except:
 		raise Http404("Sorry can't find this username:"+request.GET.get('username','alvarojoao'))
 
@@ -148,6 +170,7 @@ def languages_rest(username='alvarojoao',numbers=3,unique = False):
 	languages = sorted(languages, key=lambda tup: tup[1], reverse=True)[:numbers]
 	return languages
 
+
 def contest_rest(username='alvarojoao'):
 	link = HR_URLS['scores_elo'].replace('_username_',username)
 	data = {}
@@ -162,10 +185,17 @@ def contest_rest(username='alvarojoao'):
 	data.update({'totalmedals': totalmedals})
 	return data
 
-def submissions_rest(username='alvarojoao'):
+def submissions_rest(username='alvarojoao',last_days=8):
 	link = HR_URLS['submission_histories'].replace('_username_',username)
 	data = requests.get(link).json()
-	return data
+	today = datetime.today()
+	new_start = today + timedelta(days=-1*last_days) #day can be negative
+	last_submissions = []
+	for date,count in data.items():
+		date_object = datetime.strptime(date, '%Y-%m-%d')
+		if date_object>new_start:
+			last_submissions.append((date_object.strftime('%a'),count))
+	return last_submissions
 
 def badges(request):
 	"""
