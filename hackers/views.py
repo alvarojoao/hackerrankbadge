@@ -8,9 +8,6 @@ from datetime import datetime, date,timedelta
 from urlparse import urlparse, parse_qs
 import time
 from django.db import transaction
-from bs4 import BeautifulSoup
-import urllib2
-import urllib
 import requests
 import json
 import ast
