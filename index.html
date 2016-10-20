@@ -123,9 +123,9 @@
                 previewFrame = gId('previewFrame'),
                 codeArea = gId('code'),
                 lastUser = 'mojombo',
-                loc = document.location,
+                loc = {protocol:'https:',host:'hackerrank-badge.herokuapp.com'},
                 urlTemplate = [loc.protocol, '', loc.host, ':user'].join('/'),
-                codeTemplate = '<iframe src=":url" style="border: 0; height: 142px; width: 200px; overflow: hidden;" frameBorder="0"></iframe>',
+                codeTemplate = '<iframe src=":url" style="border: 0; height: 230px; width: 240px; overflow:hidden;" scrolling="no" frameBorder="0"></iframe>',
                 previewArea = gId('preview'),
                 spinNewLink = gId('spin-new'),
                 spinner;
