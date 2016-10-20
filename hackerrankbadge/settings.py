@@ -26,10 +26,6 @@ SECRET_KEY = "wertyuiol;lkjhgfdfghjk"
 DEBUG = True
 # Application definition
 INSTALLED_APPS = [
-    'dal',
-    'dal_select2',
-    'import_export',
-    'bootstrap_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +37,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'hackers.apps.HackersConfig',
-    'django_nvd3',
     'djangobower',
 ]
 
