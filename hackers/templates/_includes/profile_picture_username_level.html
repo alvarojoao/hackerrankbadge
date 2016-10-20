@@ -1,7 +1,12 @@
 {% load i18n admin_urls static admin_modify %}
 
 <style type="text/css">
-  
+  .profile_image_level_username span{
+    font-size: 0.5em;
+  }
+  .profile_image_level_username img{
+    padding-bottom: 3px;
+  }
 </style>
 {% if show_image or show_username or show_level  %}
   <div class="profile_image_level_username">
@@ -12,17 +17,21 @@
         <img src="{% static 'img/hackerrank_placeholder.png' %}" width="30" rel="tooltip" class="profile_badge_image" >
       {%endif%}
     {%endif%}
+    <span>
     
     {% if show_username %}
-      {{data.model.username}} 
+      <a href="https://www.hackerrank.com/{{data.model.username}}">{{data.model.username}}</a>
     {%endif%}
+    </span>
 
+    <span>
+    
     {% if show_level %}
       {% autoescape off %}
         {{data.model.title}}
       {% endautoescape %} Level
     {%endif%}
-
+    </span>
   </div>
 {%endif%}
 

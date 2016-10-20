@@ -1,20 +1,28 @@
 {% load i18n admin_urls static admin_modify %}
+{% load extra %}
 
 <style type="text/css">
   .badge_image_container_stars{
+    float: left;
     position: relative;
-    top: -45px;
-    left: 44px;
+    top: -2.1em;
+    left: 1.5em;
+  }
+  .badge_image_container_stars img{
+    width: 0.5em;
   }
   .badge_image_container{
     float:left;
-    
+    height: 6em;
+  }
+  .no-padding{
+    padding:0;
   }
   .all_badges{
     float:left;
     width: 100%;
     display: block;
-
+    height: 6em;
   }
   .text-center{
     text-align: center;
@@ -27,8 +35,8 @@
 {% if show_badges %}
 <div class="all_badges">
   {% for model in data.models %}
-    <div class="badge_image_container">
-        <img src="{% static 'img/'|add:model.image_url %}" width="150" rel="tooltip" class="profile_badge_image" data-original-title="Algorithms  level 2 ">
+    <div class="badge_image_container no-padding {{data.models|length|col_size}}">
+        <img src="{% static 'img/'|add:model.image_url %}" width="100%" rel="tooltip" class="profile_badge_image" data-original-title="Algorithms  level 2 ">
           <div class="badge_image_container_stars">
           	{% for i in 'xxxx' %}
           		{% if forloop.counter0 < model.level %}
@@ -38,9 +46,12 @@
           		{% endif %}
             {% endfor %}
           </div>
+          {% if show_percentil %}
+
           <div class="text-percentile text-center">
               {{model.percentile}} rd percentile
           </div>
+          {% endif %}
     </div>
   {% endfor %}
 </div>

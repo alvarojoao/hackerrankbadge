@@ -12,20 +12,5 @@ from django.contrib.auth.models import User
 
 # Register your models here.
 from django.db import transaction
-from hackers.models import Hacker
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
-# class ResponsavelAdmin(UserAdmin):
-
-# 	search_fields = ['username']
-
-# admin.site.register(Responsavel, ResponsavelAdmin)
-
-
-class HackerAdmin(admin.ModelAdmin):
-
-	search_fields = ['username']
-
-
-admin.site.register(Hacker, HackerAdmin)

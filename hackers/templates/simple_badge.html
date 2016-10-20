@@ -1,28 +1,40 @@
 {% extends "base.html" %}
 {% load i18n admin_urls static admin_modify %}
+
+{% block content  %}
 <style type="text/css">
   sup {
   }
   .float-left{
   	float:left;
   }
+
+  .card-header{
+  	padding-top:0px;
+  	padding-bottom:0px;
+  }
+  .card-block{
+  	padding: 0 1.25rem;
+  }
+  .card{
+    margin-bottom: 0;
+  }
 </style>
-{% block content  %}
 <div class="card">
 	<h3 class="card-header">
 	    {% include "_includes/profile_picture_username_level.html" with data=profile show_image=show_image show_username=show_username show_level=show_level only %}
 	</h3>
 	<div class="card-block">
-		<h4 class="card-title">
-		    {% include "_includes/medals.html" with data=contest show_medals=show_medals show_medals_details=show_medals_detailse only %}
-			{% include "_includes/languages.html" with data=languages show_languages=show_languages show_submissions_title=show_submissions_title show_language_title=show_language_title only %}
-			{% include "_includes/events_followers_count.html" with data=profile show_events=show_events show_followers=show_followers only %}
-		</h4>
+		 
+	    {% include "_includes/medals.html" with data=contest show_medals=show_medals show_medals_details=show_medals_detailse only %}
 
 		{% include "_includes/badges.html" with data=badges show_badges=show_badges only %}
-		{% include "_includes/last_submissions.html" with data=submissions show_last_submmissions=show_last_submmissions only %}
+	   
+		
+		{% include "_includes/events_followers_count.html" with data=profile show_events=show_events show_followers=show_followers only %}
 
-		{% include "_includes/profile_bio_website.html" with data=profile show_bio=show_bio show_website=show_website only %}
+		{% include "_includes/last_submissions_languages.html" with data=submissions  data2=languages show_last_submissions_languages=show_last_submissions_languages only %}
+
 		
 	</div>
 </div>

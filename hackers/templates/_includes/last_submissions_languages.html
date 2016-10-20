@@ -1,24 +1,49 @@
 {% load i18n admin_urls static admin_modify %}
 {% load extra %}
 
-{% if show_last_submmissions %}
+{% if show_last_submissions_languages %}
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <style type="text/css">
 .last-submissions {
-  width: 50px;
+  width: 50%;
   float:left;
   display: block;
 
 }
+.last-submissions-languages{
+    float: left;
+  width: 100%;
 
+}
+  .all-languages{
+    font-size: .5em;
+    width: 50%;
+    float: left;
+    padding-top: 4.5em;
+  }
+  .language{
+    float: left;
+    padding-left:5px;
+    font-weight: bold;
+  }
 </style>
+<div class="last-submissions-languages">
+  <div class="last-submissions">
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+  </div>
 
-<div class="last-submissions">
-  <div>
-    <canvas id="myChart"></canvas>
+  <div class="all-languages"> 
+  {% for l,sub,class in data2 %}
+      <span class="language"> 
+          {{l}}
+      </span>
+  {% endfor %}
   </div>
 </div>
+
 <script type="text/javascript">
 	var ctx = document.getElementById("myChart").getContext('2d');
 

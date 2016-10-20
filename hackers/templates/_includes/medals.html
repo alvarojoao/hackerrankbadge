@@ -4,11 +4,12 @@
 		display: block;
 	}
 	.all-medals{
-		padding-bottom: 10px
+		padding-bottom: 8px;
+		text-align: center;
 	}
 </style>
 
-{% if show_medals %}
+{% if show_medals and data.totalmedals.items|length > 0  %}
 
 	<div class="all-medals">
 	{% for medal,count in data.totalmedals.items %} 
@@ -16,7 +17,7 @@
 			{% if count > 0 %}
 				<span class="medal">
 				  <img src="{% static 'img/medals/'|add:medal|add:'.svg' ' %}" width="10" rel="tooltip" class="profile_badge_image" >
-				  {{count}}	{{medal}}	
+				  <strong> {{count}}	{{medal}}	</strong>
 				</span>
 			{%endif%}
 	{% endfor %}

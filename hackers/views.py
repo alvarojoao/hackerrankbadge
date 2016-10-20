@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from hackers.models import Hacker
 # Create your views here.
 from django.core import serializers
 import json
@@ -18,20 +17,6 @@ import ast
 from django.template import Context, Template
 from django.http import Http404
 from datetime import datetime
-
-# https://www.hackerrank.com/rest/contests/master/notifications/summary?_=1476764851227
-# https://www.hackerrank.com/rest/threads/unread_threads?_=1476764851230
-# https://www.hackerrank.com/rest/contests/master/hackers/alvarojoao/profile?_=1476764851231
-# https://www.hackerrank.com/rest/hackers/alvarojoao/contest_participation?offset=0&limit=5&_=1476764851232
-# https://www.hackerrank.com/rest/hackers/alvarojoao/recent_challenges?offset=0&limit=5&_=1476764851233
-# https://www.hackerrank.com/rest/hackers/alvarojoao/recent_discussions?offset=0&limit=5&_=1476764851234
-# https://www.hackerrank.com/rest/hackers/alvarojoao/badges?_=1476764851235
-# https://www.hackerrank.com/rest/hackers/alvarojoao/scores_elo?_=1476764851236
-# https://www.hackerrank.com/rest/hackers/alvarojoao/rating_histories_elo?_=1476764851237
-# https://www.hackerrank.com/rest/hackers/alvarojoao/submission_histories?_=1476764851238
-# https://www.hackerrank.com/rest/hackers/alvarojoao/scores_elo?_=1476764851239
-# https://www.hackerrank.com/rest/hackers/alvarojoao/rating_histories_elo?_=1476764851240
-# https://www.hackerrank.com/rest/hackers/alvarojoao/badges
 
 HR_URLS={
 'contests':'https://www.hackerrank.com/rest/contests/master/notifications/summary',
@@ -97,7 +82,11 @@ HR_LANG={"c":'devicon-c-line',
 "mysql":'devicon-mysql-plain-wordmark colored',
 "db2":''}
 
-def simple_badge(request):
+def home(request):
+	return render(request, 'index.html',  locals(), content_type='text/html')
+
+
+def simple_badge(request,username):
 	"""
 	home page
 	"""
@@ -106,34 +95,31 @@ def simple_badge(request):
 		show_username = request.GET.get('show_username','True') in ['true', 'True']
 		show_level = request.GET.get('show_level','True') in ['true', 'True']
 		show_medals = request.GET.get('show_medals','True') in ['true', 'True']
-		show_medals_details = request.GET.get('show_medals_details','True') in ['true', 'True']
-		show_languages = request.GET.get('show_languages','True') in ['true', 'True']
-		show_submissions_title = request.GET.get('show_submissions_title','True') in ['true', 'True']
-		show_language_title = request.GET.get('show_language_title','True') in ['true', 'True']
-		show_events = request.GET.get('show_events','True') in ['true', 'True']
-		show_followers = request.GET.get('show_followers','True') in ['true', 'True']
+		show_medals_details = request.GET.get('show_medals_details','False') in ['true', 'True']
+		show_submissions_title = request.GET.get('show_submissions_title','False') in ['true', 'True']
+		show_language_title = request.GET.get('show_language_title','False') in ['true', 'True']
+		show_events = request.GET.get('show_events','False') in ['true', 'True']
+		show_followers = request.GET.get('show_followers','False') in ['true', 'True']
 		show_badges = request.GET.get('show_badges','True') in ['true', 'True']
-		show_bio = request.GET.get('show_bio','True') in ['true', 'True']
-		show_website = request.GET.get('show_website','True') in ['true', 'True']
-		show_last_submmissions = request.GET.get('show_last_submmissions','True') in ['true', 'True']
+		show_bio = request.GET.get('show_bio','False') in ['true', 'True']
+		show_website = request.GET.get('show_website','False') in ['true', 'True']
+		show_last_submissions_languages = request.GET.get('show_last_submissions_languages','True') in ['true', 'True']
 
-
-		username = request.GET.get('username','alvarojoao')
 		if show_image or show_username or show_level or show_events or show_followers or show_bio or show_website:
 			profile = profile_rest(username)
 		if show_medals:
 			contest = contest_rest(username)
 		if show_badges:
 			badges = badges_rest(username)
-		if show_languages:
+		if show_last_submissions_languages:
 			languages = languages_rest(username) 
-		if show_last_submmissions:
+		if show_last_submissions_languages:
 			submissions = submissions_rest(username) 
-
 	except:
 		raise Http404("Sorry can't find this username:"+username)
 
 	return render(request, 'simple_badge.html',  locals(), content_type='text/html')
+
 
 def badges_rest(username='alvarojoao'):
 	"""
@@ -186,17 +172,20 @@ def contest_rest(username='alvarojoao'):
 	data.update({'totalmedals': totalmedals})
 	return data
 
-def submissions_rest(username='alvarojoao',last_days=8):
+def submissions_rest(username='alvarojoao',last_days=7):
 	link = HR_URLS['submission_histories'].replace('_username_',username)
 	data = requests.get(link).json()
 	today = datetime.today()
 	new_start = today + timedelta(days=-1*last_days) #day can be negative
-	last_submissions = []
+	last_submissions = {}
+	weekdays = [date_object.strftime('%a') for date_object in map(lambda x:today + timedelta(days=-1*x),range(last_days)) ][::-1]
 	for date,count in data.items():
 		date_object = datetime.strptime(date, '%Y-%m-%d')
 		if date_object>new_start:
-			last_submissions.append((date_object.strftime('%a'),count))
-	return last_submissions
+			last_submissions[date_object.strftime('%a')] = count
+	for week in weekdays:
+		last_submissions[week] = last_submissions.get(week,0.5)
+	return last_submissions.items()
 
 def badges(request):
 	"""

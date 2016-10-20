@@ -17,16 +17,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.conf.urls import url
 from django.contrib import admin
-from hackers.views import badges,profile,contest,submissions,simple_badge,language
+from hackers.views import simple_badge,home
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^generatebadge/', badges),
-    url(r'^generateprofile/', profile),
-    url(r'^generatelanguages/', language),
-    url(r'^generatecontest/', contest),
-    url(r'^generatesubmissions/', submissions),
-    url(r'^generate_simple/', simple_badge)
-
+    url(r'^$', home),
+    url(r'^(?P<username>[\w-]+)/', simple_badge)
 ]
