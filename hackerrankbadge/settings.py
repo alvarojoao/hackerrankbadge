@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'hackers.apps.HackersConfig',
-    'djangobower',
 ]
 
 # Django-bower
