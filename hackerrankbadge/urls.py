@@ -20,6 +20,6 @@ from hackers.views import simple_badge,home
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', home),
+   # url(r'^$', home),
     url(r'^(?P<username>[\w-]+)/', simple_badge)
 ]
