@@ -82,7 +82,6 @@ HR_LANG={"c":'devicon-c-line',
 def home(request):
 	return render(request, 'index.html',  locals(), content_type='text/html')
 
-
 def simple_badge(request,username):
 	"""
 	home page
