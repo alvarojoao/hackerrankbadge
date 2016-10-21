@@ -2,14 +2,35 @@
 {% load extra %}
 
 <style type="text/css">
-  .badge_image_container_stars{
+ 
+  .badge_image_container_stars_1{
     float: left;
     position: relative;
     top: -2.1em;
     left: 1.5em;
   }
-  .badge_image_container_stars img{
+  .badge_image_container_stars_2{
+    float: left;
+    position: relative;
+    top: -2.1em;
+    left: 1.5em;
+  }
+  .badge_image_container_stars_3{
+    float: left;
+    position: relative;
+    top: -1.8em;
+    left: 0.89em;
+
+  }
+  
+  .badge_image_container_stars_1 img{
     width: 0.5em;
+  }
+  .badge_image_container_stars_2 img{
+    width: 0.5em;
+  }
+  .badge_image_container_stars_3 img{
+    width: 0.38em;
   }
   .badge_image_container{
     float:left;
@@ -18,11 +39,24 @@
   .no-padding{
     padding:0;
   }
-  .all_badges{
+  .all_badges_1{
     float:left;
     width: 100%;
     display: block;
     height: 6em;
+  }
+  .all_badges_2{
+    float:left;
+    width: 100%;
+    display: block;
+    height: 6em;
+  }
+
+  .all_badges_3{
+    float:left;
+    width: 100%;
+    display: block;
+    height: 5em;
   }
   .text-center{
     text-align: center;
@@ -32,12 +66,12 @@
     top: -30px;
   }
 </style>
-{% if show_badges %}
-<div class="all_badges">
+{% if show_badges and data.models|length > 0 %}
+<div class="all_badges_{{data.models|length}}">
   {% for model in data.models %}
     <div class="badge_image_container no-padding {{data.models|length|col_size}}">
-        <img src="{% static 'img/'|add:model.image_url %}" width="100%" rel="tooltip" class="profile_badge_image" data-original-title="Algorithms  level 2 ">
-          <div class="badge_image_container_stars">
+        <img src="{% static 'img/'|add:model.image_url %}" width="100%" rel="tooltip" class="profile_badge_image" data-original-title="{{model.name}} level {{model.level}} ">
+          <div class="badge_image_container_stars_{{data.models|length}}">
           	{% for i in 'xxxx' %}
           		{% if forloop.counter0 < model.level %}
       			 	<img src="{% static "img/star.png" %}" class="profile_badge_star" width="12">

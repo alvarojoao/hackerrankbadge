@@ -88,19 +88,21 @@ def simple_badge(request,username):
 	home page
 	"""
 	try:
-		show_image = request.GET.get('show_image','True')  in ['true', 'True']
-		show_username = request.GET.get('show_username','True') in ['true', 'True']
-		show_level = request.GET.get('show_level','True') in ['true', 'True']
-		show_medals = request.GET.get('show_medals','True') in ['true', 'True']
-		show_medals_details = request.GET.get('show_medals_details','False') in ['true', 'True']
-		show_submissions_title = request.GET.get('show_submissions_title','False') in ['true', 'True']
-		show_language_title = request.GET.get('show_language_title','False') in ['true', 'True']
-		show_events = request.GET.get('show_events','False') in ['true', 'True']
-		show_followers = request.GET.get('show_followers','False') in ['true', 'True']
-		show_badges = request.GET.get('show_badges','True') in ['true', 'True']
-		show_bio = request.GET.get('show_bio','False') in ['true', 'True']
-		show_website = request.GET.get('show_website','False') in ['true', 'True']
-		show_last_submissions_languages = request.GET.get('show_last_submissions_languages','True') in ['true', 'True']
+		show_image = True
+		show_username = True
+		show_level = True
+		show_medals = True
+		show_medals_details = False
+		show_submissions_title = False
+		show_language_title = False
+		show_events = False
+		show_followers = False
+		show_badges = True
+		show_bio =  False
+		show_website = False
+		show_last_submissions_languages = True
+
+		show_suport = request.GET.get('s','False') in ['true', 'True','1']
 
 		if show_image or show_username or show_level or show_events or show_followers or show_bio or show_website:
 			profile = profile_rest(username)
@@ -176,12 +178,19 @@ def submissions_rest(username='alvarojoao',last_days=7):
 	new_start = today + timedelta(days=-1*last_days) #day can be negative
 	last_submissions = {}
 	weekdays = [date_object.strftime('%a') for date_object in map(lambda x:today + timedelta(days=-1*x),range(last_days)) ][::-1]
+	max_val = 0
 	for date,count in data.items():
 		date_object = datetime.strptime(date, '%Y-%m-%d')
 		if date_object>new_start:
 			last_submissions[date_object.strftime('%a')] = count
+			if max_val<count:
+				max_val = count
+
+	max_val = int(max_val) if (int(max_val) > 0) else 1
 	for week in weekdays:
-		last_submissions[week] = last_submissions.get(week,0.5)
+		last_submissions[week] = last_submissions.get(week,max_val*0.1)
+	print max_val
+	print last_submissions.items()
 	return last_submissions.items()
 
 def badges(request):
